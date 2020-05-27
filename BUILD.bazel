@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = glob(
+        ["*.go", "*.h"],
+        exclude=["**/*_test.go"],
+    ),
+    importpath = "github.com/akitasoftware/go-z3",
+    visibility = ["//visibility:public"],
+    cgo = True,
+    cdeps = [":z3"],
+    # If you're debugging this targer, might be helpful to turn on verbose
+    # logging from the c compiler and linker.
+    # copts = ["-v"],
+    # clinkopts = ["-v"],
+)
+
+cc_library(
+    name = "z3",
+    srcs = select({
+        "@io_bazel_rules_go//go/platform:darwin": ["third_party/libz3_4.8.8_osx.a"],
+        "@io_bazel_rules_go//go/platform:linux": ["third_party/libz3_4.8.8_ubuntu.a"],
+        "//conditions:default": [],
+    }),
+    hdrs = glob(["third_party/z3/src/api/*.h"]),
+    visibility = ["//visibility:private"],
+    alwayslink = True,
+    linkstatic = True,
+    strip_include_prefix = "third_party/z3/src/api",
+)
