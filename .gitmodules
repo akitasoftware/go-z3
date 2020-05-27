@@ -1,0 +1,6 @@
+[submodule "z3"]
+	path = z3
+	url = https://github.com/Z3Prover/z3.git
+[submodule "third_party/z3"]
+	path = third_party/z3
+	url = https://github.com/Z3Prover/z3.git
