@@ -1,5 +1,19 @@
 # Go Bindings to the Z3 Theorem Prover
 
+## Akita: Tips for Debugging the Build
+
+- Make sure git submodules are initialized
+
+    ```shell
+    git submodule update --init --recursive
+    ```
+
+- Try `go build .` first before building with `bazel`.
+- Set verbose flags via `copts` and `clinkopts` (see `BUILD.bazel`).
+- The relevant c compiler and linker flags are defined in `z3.go` via the `cgo`
+  directives. You can add specific flags for `bazel` builds via `copts` and
+  `clinkopts`.
+
 go-z3 provides bindings to [Z3](https://github.com/Z3Prover/z3), a
 theorem prover out of Microsoft Research. Z3 is a state-of-the-art
 [SMT Solver](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories).
